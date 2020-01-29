@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <style>
+      .button {
+        padding: 8px 16px;
+        background-color: #FFFFFF;
+        border-radius: 8px;
+        transition-duration: 0.4s;
+      }
+      
+      .button:hover {
+        transform: translateY(2px);
+      }
+    </style>
+  </head>
+  <body style="background-color:black;"  text="white" onload="loadFunction()">
+    <h2><p id="title">The Particle Game</p></h2> <button class="button" onclick="location.href='index.html';">Home</button>
+    <h3>Particles</h2>
+    <b><p id="quark"></p>
+    <button class="button" onclick="quarksUp()">Make a Quark</button>
+    <b><p id="elemPart"></p>
+    <button class="button" onclick="elemPartsUp()">Make an Elementary Particle: 10 Quarks</button>
+    <b><p id="atom"></p>
+    <button class="button" onclick="atomsUp()">Make an Atom: 3 Elementary Particles</button>
+    <h3>Upgrades</h2>
+    <button class="button" onclick="upgrade(0)">Upgrade Quarks/Click<p id="quarksPerClickUpgrade"></p></button>
+    <button class="button" onclick="upgrade(1)">Quarks/Elem. Part. -2<p id="quarksPerElemPartUpgrade"></p></button>
+    <p id="autobuyerInterval"></p>
+    <button class="button" onclick="upgrade(13)">Autobuyer Interval<p id="autobuyerIntervalButton"></p></button>
+    <button class="button" onclick="upgrade(10)">Quark Autobuyer<p id="quarkAutobuyerButton"></p></button>
+    <button class="button" onclick="upgrade(11)">Elem. Part. Autobuyer<p id="elemPartAutobuyerButton"></p></button>
+    <button class="button" onclick="upgrade(12)">Atom Autobuyer<p id="atomAutobuyerButton"></p></button>
+    
+    <script>
+      function loadFunction() {
+        window.quarks = 0;
+        window.quarksPerClick = 1;
+        window.elemParts = 0;
+        window.quarksPerElemPart = 10;
+        window.atoms = 0;
+        window.quarksPerClickUpgradePrice = 1;
+        window.quarksPerElemPartUpgradePrice = 2;
+        window.quarkAutobuyerPrice = 2;
+        window.quarkAutobuyer = 0;
+        window.elemPartAutobuyerPrice = 4;
+        window.elemPartAutobuyer = 0;
+        window.atomAutobuyerPrice = 8;
+        window.atomAutobuyer = 0;
+        window.autobuyerIntervalPrice = 5;
+        window.autobuyerInterval = 1000;
+        setInterval(autobuyers, window.autobuyerInterval);
+        update();
+      }
+      function quarksUp() {
+        window.quarks += window.quarksPerClick;
+        update();
+      }
+      function elemPartsUp() {
+        if(window.quarks >= window.quarksPerElemPart) {
+          window.quarks -= window.quarksPerElemPart;
+          window.elemParts += 1;
+          update();
+        }
+      }
+      function atomsUp() {
+        if(window.elemParts >= 3) {
+          window.elemParts -= 3;
+          window.atoms += 1;
+          update();
+        }
+      }
+      function autobuyers() {
+        if(window.quarkAutobuyer == 1) {
+          quarksUp();
+        }
+        if(window.elemPartAutobuyer == 1) {
+          elemPartsUp();
+        }
+        if(window.atomAutobuyer == 1) {
+          atomsUp();
+        }
+        update();
+      }
+      function upgrade(upgrade) {
+        switch(upgrade) {
+          case 0:
+            if(window.atoms >= window.quarksPerClickUpgradePrice) {
+              window.atoms -= window.quarksPerClickUpgradePrice;
+              window.quarksPerClick += 1;
+            }
+            break;
+          case 1:
+            if(window.atoms >= window.quarksPerElemPartUpgradePrice && window.quarksPerElemPart > 2) {
+              window.atoms -= window.quarksPerElemPartUpgradePrice;
+              window.quarksPerElemPart -= 2;
+              window.quarksPerElemPartUpgradePrice = window.quarksPerElemPartUpgradePrice * 2;
+            }
+            break;
+          case 10:
+            if(window.atoms >= window.quarkAutobuyerPrice && window.quarkAutobuyer != 1) {
+              window.atoms -= window.quarkAutobuyerPrice;
+              window.quarkAutobuyer = 1;
+              window.quarkAutobuyerPrice = 0;
+            }
+            break;
+          case 11:
+            if(window.atoms >= window.elemPartAutobuyerPrice && window.elemPartAutobuyer != 1) {
+              window.atoms -= window.elemPartAutobuyerPrice;
+              window.elemPartAutobuyer = 1;
+              window.elemPartAutobuyerPrice = 0;
+            }
+            break;
+          case 12:
+            if(window.atoms >= window.atomAutobuyerPrice && window.atomAutobuyer != 1) {
+              window.atoms -= window.atomAutobuyerPrice;
+              window.atomAutobuyer = 1;
+              window.atomAutobuyerPrice = 0;
+            }
+            break;
+          case 13:
+            if(window.atoms >= window.autobuyerIntervalPrice && window.autobuyerInterval > 125) {
+              window.atoms -= window.autobuyerIntervalPrice;
+              window.autobuyerInterval = window.autobuyerInterval / 2;
+              window.autobuyerIntervalPrice = window.autobuyerIntervalPrice * 4;
+            }
+            break;
+        }
+        update();
+      }
+      function update() {
+        document.getElementById("quark").innerHTML = "Quarks: " + window.quarks;
+        document.getElementById("elemPart").innerHTML = "Elementary Particles(Elem. Part.): " + window.elemParts;
+        document.getElementById("atom").innerHTML = "Atoms: " + window.atoms;
+        window.quarksPerClickUpgradePrice = window.quarksPerClick * window.quarksPerClick;
+        document.getElementById("quarksPerClickUpgrade").innerHTML = window.quarksPerClickUpgradePrice + " Atom(s)";
+        document.getElementById("quarksPerElemPartUpgrade").innerHTML = window.quarksPerElemPartUpgradePrice + " Atoms";
+        document.getElementById("autobuyerIntervalButton").innerHTML = window.autobuyerIntervalPrice + " Atoms";
+        document.getElementById("autobuyerInterval").innerHTML = "Autobuyer Interval: " + window.autobuyerInterval + "ms";
+        document.getElementById("quarkAutobuyerButton").innerHTML = window.quarkAutobuyerPrice + " Atoms";
+        document.getElementById("elemPartAutobuyerButton").innerHTML = window.elemPartAutobuyerPrice + " Atoms";
+        document.getElementById("atomAutobuyerButton").innerHTML = window.atomAutobuyerPrice + " Atoms";
+        if(window.atoms == 100) {
+          document.getElementById("title").innerHTML = "You Won!";
+          setTimeout(loadFunction(), 3000);
+        }
+      }
+    </script>
+  </body>
+</html>
