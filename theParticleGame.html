@@ -5,6 +5,16 @@
     <meta name="author" content="Admiral Gama">
     
     <style>
+      body {
+        background-color: white;
+        color: black;
+      }
+      
+      .dark-mode {
+        background-color: black;
+        color: white;
+      }
+      
       .button {
         padding: 8px 16px;
         background-color: #FFFFFF;
@@ -20,6 +30,7 @@
   </head>
   <body style="background-color:black;"  text="white" onload="loadFunction()">
     <h2><p id="title">The Particle Game</p></h2> <button class="button" onclick="location.href='https://admiralgama.github.io/';">Home</button>
+    <button class="button" onclick="darkMode()">Light/Dark Mode</button>
     <h3>Particles</h2>
     <b><p id="quark"></p>
     <button class="button" onclick="quarksUp()">Make a Quark</button>
@@ -56,6 +67,12 @@
         setInterval(autobuyers, window.autobuyerInterval);
         update();
       }
+      
+      function darkMode() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
+      }
+      
       function quarksUp() {
         window.quarks += window.quarksPerClick;
         update();
