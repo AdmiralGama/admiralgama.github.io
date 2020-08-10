@@ -6,13 +6,13 @@
     
     <style>
       body {
-        background-color: black;
-        color: white;
-      }
-      
-      .light-mode {
         background-color: white;
         color: black;
+      }
+      
+      .dark-mode {
+        background-color: black;
+        color: white;
       }
       
       .button {
@@ -31,14 +31,14 @@
   <body>
     <b>
     <h1>Admiral Gama</h1>
+    <button class="button" onclick="darkMode()">Light/Dark Mode</button>
     <button class="button" onclick="location.href='theParticleGame.html';">The Particle Game</button>
     <button class="button" onclick="location.href='aboutMe.html';">About Me</button>
-    <button class="button" onclick="lightMode()">Click me</button>
     </b>
     <script>
-      function lightMode() {
-      var element = document.body;
-      element.classList.toggle("light-mode");
+      function darkMode() {
+        var element = document.body;
+        element.classList.toggle("dark-mode");
       }
     </script>
     </body>
