@@ -5,6 +5,16 @@
     <meta name="author" content="Admiral Gama">
     
     <style>
+      body {
+        background-color: black;
+        color: white;
+      }
+      
+      .light-mode {
+        background-color: white;
+        color: black;
+      }
+      
       .button {
         padding: 8px 16px;
         background-color: #FFFFFF;
@@ -18,11 +28,18 @@
       }
     </style>
   </head>
-  <body style="background-color:black;" text="white">
+  <body>
     <b>
     <h1>Admiral Gama</h1>
     <button class="button" onclick="location.href='theParticleGame.html';">The Particle Game</button>
     <button class="button" onclick="location.href='aboutMe.html';">About Me</button>
+    <button onclick="lightMode()">Click me</button>
     </b>
+    <script>
+      function lightMode() {
+      var element = document.body;
+      element.classList.toggle("light-mode");
+      }
+    </script>
     </body>
 </html>
